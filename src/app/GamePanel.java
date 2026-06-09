@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
   
-  private static final int TILE_SIZE = 32;
+  private static final int TILE_SIZE = 64;
   private int mapCols = 20;
   private int mapRows = 15;
   
