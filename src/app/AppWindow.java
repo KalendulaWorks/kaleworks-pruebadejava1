@@ -6,7 +6,8 @@ public class AppWindow extends JFrame{
   public AppWindow(){
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     JLabel etiqueta = new JLabel("ola sebas");
-    this.getContentPane().add(etiqueta);
+    GamePanel panel = new GamePanel();
+    this.add(panel);
     this.pack();
     this.setVisible(true);
   }
