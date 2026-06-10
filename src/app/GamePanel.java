@@ -18,27 +18,25 @@ public class GamePanel extends JPanel {
     
     cuadros = new Tile[mapCols][mapRows];
       
-      for (int col = 0; col <= mapCols -1; col++){
+      for (int col = 0; col < mapCols -1; col++){
         
-        for (int row = 0; row <= mapRows -1; row++){
+        for (int row = 0; row < mapRows -1; row++){
           cuadros[col][row] = new GrassTile(1,1);
         }
       }
    }
   @Override
   public void paintComponent(Graphics g){
-    super.paintComponent(g);
-    g.setColor(Color.BLACK);
-       
-      for (int col = 0; col <= mapCols; col++){  
-        for (int row = 0; row <= mapRows; row++){
+    super.paintComponent(g);   
+      for (int col = 0; col < mapCols; col++){  
+        for (int row = 0; row < mapRows; row++){
           int x = col * TILE_SIZE;
           int y = row * TILE_SIZE;
           cuadros[col][row].draw(g,x,y);
         }
       }
       
-      
+      g.setColor(Color.BLACK);
       for (int col = 0; col <= mapCols; col++){
        int x = col * TILE_SIZE;
         g.drawLine(x,0,x,mapRows*TILE_SIZE);
