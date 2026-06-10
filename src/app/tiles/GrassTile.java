@@ -1,9 +1,9 @@
-package app;
+package app.tiles;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GrassTile {
+public class GrassTile extends Tile{
     private int xt = 1;
     private int yt = 1; //tamaños en formato tiles
     
