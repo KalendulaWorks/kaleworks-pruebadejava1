@@ -8,7 +8,7 @@ public abstract class Tile {
    protected int xt;
    protected int yt;
    
-   public Tile(tileX, tileY){
+   public Tile(int tileX,int tileY){
      this.xt = tileX;
      this.yt = tileY;
    }

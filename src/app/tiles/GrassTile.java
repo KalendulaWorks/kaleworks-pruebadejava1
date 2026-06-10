@@ -1,15 +1,14 @@
 package app.tiles;
 
+import app.GamePanel;
 import javax.swing.*;
 import java.awt.*;
 
 public class GrassTile extends Tile{
-    private int xt = 1;
-    private int yt = 1; //tamaños en formato tiles
-    
-    public GrassTile(int tilex, int tiley){
-     this.xt = tilex;
-     this.yt = tiley;
+    public GrassTile(int tileX, int tileY){
+      
+     super(tileX,tileY) //como grasstile hereda tile entonces uso super en lugar de this para constructor creo
+
     }
     
     private void dibujarGrass(Graphics g, int x, int y, int width,int height){
