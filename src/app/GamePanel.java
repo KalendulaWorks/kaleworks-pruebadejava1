@@ -7,8 +7,8 @@ import app.tiles.GrassTile;
 public class GamePanel extends JPanel {
   
   public static final int TILE_SIZE = 32;
-  private int mapCols = 20;
-  private int mapRows = 15;
+  private int mapCols = 40;
+  private int mapRows = 20;
   
   private Tile[][] cuadros;
 
