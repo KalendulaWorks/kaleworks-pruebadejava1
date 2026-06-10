@@ -4,13 +4,13 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
   
-  private static final int TILE_SIZE = 64;
+  public static final int TILE_SIZE = 32;
   private int mapCols = 20;
   private int mapRows = 15;
   
   public GamePanel(){
     this.setPreferredSize(new Dimension(1280,720));
-    this.setBackground(Color.GREEN);
+    this.setBackground(Color.DARK_GRAY);
   }
 
   @Override
