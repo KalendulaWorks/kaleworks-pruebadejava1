@@ -18,9 +18,8 @@ public class GamePanel extends JPanel {
     
     cuadros = new Tile[mapCols][mapRows];
       
-      for (int col = 0; col < mapCols -1; col++){
-        
-        for (int row = 0; row < mapRows -1; row++){
+      for (int col = 0; col < mapCols; col++){
+        for (int row = 0; row < mapRows; row++){
           cuadros[col][row] = new GrassTile(1,1);
         }
       }

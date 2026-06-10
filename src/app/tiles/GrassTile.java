@@ -15,7 +15,7 @@ public class GrassTile extends Tile{
       g.setColor(Color.GREEN);
       g.fillRect(x,y,width,height);
       g.setColor(new Color(0,100,0));
-      g.drawRect(x,y,width-1,height-1);
+      g.drawRect(x,y,width-2,height-2);
     }
 
     public void draw(Graphics g, int x, int y) {
