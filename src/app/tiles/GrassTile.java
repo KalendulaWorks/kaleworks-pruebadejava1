@@ -7,7 +7,7 @@ import java.awt.*;
 public class GrassTile extends Tile{
     public GrassTile(int tileX, int tileY){
       
-     super(tileX,tileY) //como grasstile hereda tile entonces uso super en lugar de this para constructor creo
+     super(tileX,tileY); //como grasstile hereda tile entonces uso super en lugar de this para constructor creo
 
     }
     
