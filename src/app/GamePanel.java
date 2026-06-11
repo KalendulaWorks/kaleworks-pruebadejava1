@@ -1,10 +1,7 @@
 package app;
 import javax.swing.*;
 import java.awt.*;
-import app.tiles.Tile;
-import app.tiles.GrassTile;
-import app.tiles.SandTile;
-import app.tiles.StudTile;
+import app.tiles.*;
 
 public class GamePanel extends JPanel {
   
