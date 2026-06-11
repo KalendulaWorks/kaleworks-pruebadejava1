@@ -4,6 +4,7 @@ import java.awt.*;
 import app.tiles.Tile;
 import app.tiles.GrassTile;
 import app.tiles.SandTile;
+import app.tiles.StudTile;
 
 public class GamePanel extends JPanel {
   
@@ -21,7 +22,7 @@ public class GamePanel extends JPanel {
       
       for (int col = 0; col < mapCols; col++){
         for (int row = 0; row < mapRows; row++){
-          cuadros[col][row] = new GrassTile(1,1);
+          cuadros[col][row] = new StudTile(1,1);
         }
       }
    }
