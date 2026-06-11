@@ -17,10 +17,12 @@ public class SandTile extends Tile{
       g.setColor(new Color(255, 241, 115));
       g.drawRect(x,y,width-2,height-2);
       
-      for (int granos = 0; granos < width/4; granos++) {
-        for (int granosY = 0; granosY < height/4; granosY++) {
-          g.setColor(Color.WHITE);
-          g.drawRect(x,y,width-5,height-granosY);  
+      for (int granos = 0; granos < width/2; granos++) {
+        for (int granosY = 0; granosY < height/2; granosY++) {
+            int gx = x + granos*2;
+            int gy = y + granosY*2;
+          g.setColor(new Color(94, 85, 4));
+          g.fillRect(gx,gy,1,1);  
         }
       }
 
