@@ -22,7 +22,7 @@ public class GamePanel extends JPanel {
       
       for (int col = 0; col < mapCols; col++){
         for (int row = 0; row < mapRows; row++){
-          cuadros[col][row] = new StudTile(1,1);
+          cuadros[col][row] = new GrassTile(1,1);
         }
       }
    }

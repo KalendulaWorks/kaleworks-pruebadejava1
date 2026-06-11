@@ -11,7 +11,7 @@ public class SandTile extends Tile{
 
     }
     
-    private void dibujarGrass(Graphics g, int x, int y, int width,int height){
+    private void dibujarArena(Graphics g, int x, int y, int width,int height){
       g.setColor(new Color(242, 235, 174));
       g.fillRect(x,y,width,height);
       g.setColor(new Color(255, 241, 115));
@@ -32,6 +32,6 @@ public class SandTile extends Tile{
         // aquí va el dibujo del tile, relativo a (x, y)
      int width = xt*GamePanel.TILE_SIZE;
      int height = yt*GamePanel.TILE_SIZE;
-     dibujarGrass(g,x,y,width,height);
+     dibujarArena(g,x,y,width,height);
     }
 }

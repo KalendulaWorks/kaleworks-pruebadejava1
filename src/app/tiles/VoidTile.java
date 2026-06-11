@@ -1,0 +1,24 @@
+package app.tiles;
+
+import app.GamePanel;
+import javax.swing.*;
+import java.awt.*;
+
+public class VoidTile extends Tile{
+    public VoidTile(int tileX, int tileY){
+      
+     super(tileX,tileY); //como grasstile hereda tile entonces uso super en lugar de this para constructor creo
+
+    }
+    
+    private void dibujarVoid(Graphics g, int x, int y, int width,int height){
+     
+    }
+
+    public void draw(Graphics g, int x, int y) {
+        // aquí va el dibujo del tile, relativo a (x, y)
+     int width = xt*GamePanel.TILE_SIZE;
+     int height = yt*GamePanel.TILE_SIZE;
+     dibujarVoid(g,x,y,width,height);
+    }
+}
