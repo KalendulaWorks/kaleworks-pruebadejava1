@@ -14,8 +14,13 @@ public class GrassTile extends Tile{
     private void dibujarGrass(Graphics g, int x, int y, int width,int height){
       g.setColor(Color.GREEN);
       g.fillRect(x,y,width,height);
-      g.setColor(new Color(0,100,0));
-      g.drawRect(x,y,width-2,height-2);
+     for (int granos = 0; granos < width/4; granos++) {
+        for (int granosY = 0; granosY < height/4; granosY++) {
+          g.setColor(new Color(0,100,0));
+          g.drawRect(x,y,width-granos,height-granosY);  
+        }
+      }
+
     }
 
     public void draw(Graphics g, int x, int y) {

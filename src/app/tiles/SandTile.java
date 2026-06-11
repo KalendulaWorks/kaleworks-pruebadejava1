@@ -1,0 +1,35 @@
+package app.tiles;
+
+import app.GamePanel;
+import javax.swing.*;
+import java.awt.*;
+
+public class SandTile extends Tile{
+    public SandTile(int tileX, int tileY){
+      
+     super(tileX,tileY); //como grasstile hereda tile entonces uso super en lugar de this para constructor creo
+
+    }
+    
+    private void dibujarGrass(Graphics g, int x, int y, int width,int height){
+      g.setColor(new Color(242, 235, 174));
+      g.fillRect(x,y,width,height);
+      g.setColor(new Color(255, 241, 115));
+      g.drawRect(x,y,width-2,height-2);
+      
+      for (int granos = 0; granos < width/4; granos++) {
+        for (int granosY = 0; granosY < height/4; granosY++) {
+          g.setColor(Color.WHITE);
+          g.drawRect(x,y,width-5,height-granosY);  
+        }
+      }
+
+    }
+
+    public void draw(Graphics g, int x, int y) {
+        // aquí va el dibujo del tile, relativo a (x, y)
+     int width = xt*GamePanel.TILE_SIZE;
+     int height = yt*GamePanel.TILE_SIZE;
+     dibujarGrass(g,x,y,width,height);
+    }
+}
