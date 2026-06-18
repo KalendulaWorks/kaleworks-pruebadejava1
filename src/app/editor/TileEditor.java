@@ -16,20 +16,24 @@ public class TileEditor {
 
   public void apply(Tile[][] matriz, int col, int row) {
 
+    // Comprobación de límites de columna
     if (col < 0 || col >= matriz.length) {
       return;
     }
-    if (row < 0 || row >= matriz.length) {
+    // Comprobación de límites de fila
+    if (row < 0 || row >= matriz[0].length) {
       return;
     }
 
+    // Modo borrador: poner VoidTile y salir
     if (eraserMode) {
       matriz[col][row] = new VoidTile(1, 1);
+      return;
     }
 
     Tile nuevoTile = null;
-    switch (brushType) {
 
+    switch (brushType) {
       case 0:
         nuevoTile = new GrassTile(1, 1);
         break;
@@ -39,10 +43,11 @@ public class TileEditor {
       case 2:
         nuevoTile = new StudTile(1, 1);
         break;
-
       default:
-        break;
+        // Si brushType no coincide con nada, no tocar el tile
+        return;
     }
+
     matriz[col][row] = nuevoTile;
   }
 }

@@ -1,50 +1,71 @@
 package app;
+
 import javax.swing.*;
 import java.awt.*;
+
+import app.func.*;
 import app.tiles.*;
+import app.util.*;
+import app.editor.*;
 
 public class GamePanel extends JPanel {
-  
-  public static final int TILE_SIZE = 32;
-  private int mapCols = 40;
-  private int mapRows = 20;
-  
-  private Tile[][] cuadros;
 
-  public GamePanel(){
-    this.setPreferredSize(new Dimension(1280,720));
+  public static final int TILE_SIZE = 32;
+
+  private MapaManager mapaManager;
+  private MouseHandler mouseHandler;
+  private KeyboardHandler keyboardHandler;
+  private TileEditor tileEditor;
+
+  public GamePanel() {
+    this.setPreferredSize(new Dimension(1280, 720));
     this.setBackground(Color.DARK_GRAY);
-    
-    cuadros = new Tile[mapCols][mapRows];
-      
-      for (int col = 0; col < mapCols; col++){
-        for (int row = 0; row < mapRows; row++){
-          cuadros[col][row] = new GrassTile(1,1);
-        }
-      }
-   }
+    mapaManager = new MapaManager();
+    mouseHandler = new MouseHandler();
+    tileEditor = new TileEditor();
+    keyboardHandler = new KeyboardHandler(tileEditor);
+    this.addMouseListener(mouseHandler);
+    this.addKeyListener(keyboardHandler);
+    this.setFocusable(true);
+  }
+
   @Override
-  public void paintComponent(Graphics g){
-    super.paintComponent(g);   
-      for (int col = 0; col < mapCols; col++){  
-        for (int row = 0; row < mapRows; row++){
-          int x = col * TILE_SIZE;
-          int y = row * TILE_SIZE;
-          cuadros[col][row].draw(g,x,y);
-        }
+  public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    Tile[][] cuadros = mapaManager.getCuadros();
+    int mapCols = cuadros.length;
+    int mapRows = cuadros[0].length;
+    for (int col = 0; col < mapCols; col++) {
+      for (int row = 0; row < mapRows; row++) {
+        int x = col * TILE_SIZE;
+        int y = row * TILE_SIZE;
+        cuadros[col][row].draw(g, x, y);
       }
-      
-      g.setColor(Color.BLACK);
-      for (int col = 0; col <= mapCols; col++){
-       int x = col * TILE_SIZE;
-        g.drawLine(x,0,x,mapRows*TILE_SIZE);
-      }
-      
-      for (int row = 0; row <= mapRows; row++) {
-       int y = row * TILE_SIZE;
-        g.drawLine(0,y,mapCols*TILE_SIZE,y);
-      }
+    }
+
+    g.setColor(Color.BLACK);
+    for (int col = 0; col <= mapCols; col++) {
+      int x = col * TILE_SIZE;
+      g.drawLine(x, 0, x, mapRows * TILE_SIZE);
+    }
+
+    for (int row = 0; row <= mapRows; row++) {
+      int y = row * TILE_SIZE;
+      g.drawLine(0, y, mapCols * TILE_SIZE, y);
+    }
 
   }
 
-}   
+  public MapaManager getMapaManager() {
+    return mapaManager;
+  }
+
+  public MouseHandler getMouseHandler() {
+    return mouseHandler;
+  }
+
+  public TileEditor getTileEditor() {
+    return tileEditor;
+  }
+
+}
