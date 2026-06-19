@@ -45,6 +45,7 @@ public class TileEditor {
         break;
       case 3:
         nuevoTile = new ConcreteTile2x1(2, 1);
+        break;
       default:
         // Si brushType no coincide con nada, no tocar el tile
         return;
