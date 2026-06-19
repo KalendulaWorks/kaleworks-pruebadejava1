@@ -13,10 +13,6 @@ public class AppWindow extends JFrame {
     this.pack();
     this.setVisible(true);
 
-    ActualizarEditor actualizarEditor = new ActualizarEditor(
-        panel.getMapaManager(),
-        panel.getTileEditor(),
-        panel.getMouseHandler());
-    new GameLoop(actualizarEditor, panel);
+    EditorBootstrap.iniciarEditor(panel);
   }
 }
