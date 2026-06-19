@@ -37,6 +37,12 @@ public class KeyboardHandler implements KeyListener {
         eraserMode = false;
         break;
 
+      case KeyEvent.VK_4:
+        tileEditor.setBrushType(3);
+        tileEditor.setEraserMode(false);
+        eraserMode = false;
+        break;
+
       case KeyEvent.VK_E:
         eraserMode = !eraserMode;
         tileEditor.setEraserMode(eraserMode);
