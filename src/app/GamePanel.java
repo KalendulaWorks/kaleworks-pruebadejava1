@@ -7,6 +7,7 @@ import app.func.*;
 import app.tiles.*;
 import app.util.*;
 import app.editor.*;
+import app.structures.*;
 
 public class GamePanel extends JPanel {
 
@@ -32,7 +33,10 @@ public class GamePanel extends JPanel {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    Tile[][] cuadros = mapaManager.getCuadros();
+
+    Tile[][] cuadros = mapaManager.getPiso();
+    Structure[][] bloques = mapaManager.getBloques();
+
     int mapCols = cuadros.length;
     int mapRows = cuadros[0].length;
     for (int col = 0; col < mapCols; col++) {

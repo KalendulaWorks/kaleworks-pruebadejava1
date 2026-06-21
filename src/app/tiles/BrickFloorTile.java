@@ -4,11 +4,11 @@ import app.GamePanel;
 import javax.swing.*;
 import java.awt.*;
 
-public class ConcreteTile2x1 extends Tile {
-  public ConcreteTile2x1(int tileX, int tileY) {
+public class BrickFloorTile extends Tile {
+  public BrickFloorTile() {
 
-    super(tileX, tileY); // como grasstile hereda tile entonces uso super en lugar de this para
-                         // constructor creo
+    super(); // como grasstile hereda tile entonces uso super en lugar de this para
+             // constructor creo
 
   }
 
@@ -31,8 +31,8 @@ public class ConcreteTile2x1 extends Tile {
 
   public void draw(Graphics g, int x, int y) {
     // aquí va el dibujo del tile, relativo a (x, y)
-    int width = xt * GamePanel.TILE_SIZE;
-    int height = yt * GamePanel.TILE_SIZE;
+    int width = GamePanel.TILE_SIZE;
+    int height = GamePanel.TILE_SIZE;
     dibujarConcreto(g, x, y, width, height);
   }
 }

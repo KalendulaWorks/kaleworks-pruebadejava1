@@ -24,7 +24,7 @@ public class ActualizarEditor {
     if (mouseHandler.getLeftM() == true) {
       int col = mouseHandler.getX() / GamePanel.TILE_SIZE;
       int row = mouseHandler.getY() / GamePanel.TILE_SIZE;
-      editorDeCuadros.apply(mapaManager.getCuadros(), col, row);
+      editorDeCuadros.apply(mapaManager.getPiso(), col, row);
     }
   }
 

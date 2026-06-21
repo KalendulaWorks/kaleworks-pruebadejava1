@@ -1,29 +1,40 @@
 package app.func;
 
 import app.tiles.*;
+import app.structures.*;
 
 public class MapaManager {
 
   private int mapCols = 40;
   private int mapRows = 20;
-  private Tile[][] cuadros;
+  private Tile[][] piso;
+  private Structure[][] bloques;
 
   public MapaManager() {
-    cuadros = new Tile[mapCols][mapRows];
+    piso = new Tile[mapCols][mapRows];
+    bloques = new Structure[mapCols][mapRows];
 
     for (int col = 0; col < mapCols; col++) {
       for (int row = 0; row < mapRows; row++) {
-        cuadros[col][row] = new GrassTile(1, 1);
+        piso[col][row] = new GrassTile();
       }
     }
   }
 
-  public Tile geTile(int col, int row) {
-    return cuadros[col][row];
+  public Tile getTile(int col, int row) {
+    return piso[col][row];
   }
 
-  public Tile[][] getCuadros() {
-    return cuadros;
+  public Tile[][] getPiso() {
+    return piso;
+  }
+
+  public Structure getBloque(int col, int row) {
+    return bloques[col][row];
+  }
+
+  public Structure[][] getBloques() {
+    return bloques;
   }
 
 }

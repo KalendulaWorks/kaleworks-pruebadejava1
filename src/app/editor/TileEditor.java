@@ -27,7 +27,7 @@ public class TileEditor {
 
     // Modo borrador: poner VoidTile y salir
     if (eraserMode) {
-      matriz[col][row] = new VoidTile(1, 1);
+      matriz[col][row] = new VoidTile();
       return;
     }
 
@@ -35,16 +35,16 @@ public class TileEditor {
 
     switch (brushType) {
       case 0:
-        nuevoTile = new GrassTile(1, 1);
+        nuevoTile = new GrassTile();
         break;
       case 1:
-        nuevoTile = new SandTile(1, 1);
+        nuevoTile = new SandTile();
         break;
       case 2:
-        nuevoTile = new StudTile(1, 1);
+        nuevoTile = new StudTile();
         break;
       case 3:
-        nuevoTile = new ConcreteTile2x1(1, 1);
+        nuevoTile = new BrickFloorTile();
         break;
       default:
         // Si brushType no coincide con nada, no tocar el tile
