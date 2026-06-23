@@ -10,6 +10,8 @@ public class MouseHoverHandler {
   private HoverTile hoverTile;
   private MapaManager mapaManager;
 
+  public static boolean DEBUG = false;
+
   public MouseHoverHandler(GamePanel panel) {
     this.panel = panel;
     this.mouseHandler = panel.getMouseHandler();
@@ -18,11 +20,15 @@ public class MouseHoverHandler {
   }
 
   public void ActualizarMouse() {
-    DepurarHoverTiles();
+    hoverTile.calcularDatos();
+
+    if (DEBUG) {
+      DepurarHoverTiles();
+    }
+
   }
 
   private void DepurarHoverTiles() {
-    hoverTile.calcularDatos();
     String[] info = hoverTile.clasificarTile();
 
     if (info == null) {
@@ -89,7 +95,7 @@ public class MouseHoverHandler {
       }
 
       Tile t = mapaManager.getTile(col, row);
-      return t.getData();
+      return t.gTileData();
     }
 
     private int gettilepX() {

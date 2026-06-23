@@ -68,12 +68,10 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
       // hubo desplazamiento a otro tile → drag
       MouseHold = true;
       MouseSingle = false;
-      System.out.println("Soltar tras DRAG");
     } else {
       // se mantuvo en el mismo tile → click simple
       MouseHold = false;
       MouseSingle = true;
-      System.out.println("Click Simple");
     }
 
     if (e.getButton() == MouseEvent.BUTTON1) {
@@ -118,7 +116,6 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
     if (currCol != startCol || currRow != startRow) {
       MouseHold = true;
       MouseSingle = false;
-      System.out.println("Modo Drag: " + MouseHold);
     }
   }
 

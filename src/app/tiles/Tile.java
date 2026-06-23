@@ -21,7 +21,7 @@ public abstract class Tile {
     this.tileInfo = new String[] { nombre, nombreT, desc };
   }
 
-  public String[] getData() {
+  public String[] gTileData() {
     return tileInfo;
   }
 
