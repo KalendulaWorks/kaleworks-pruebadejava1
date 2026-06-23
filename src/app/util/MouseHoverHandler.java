@@ -44,6 +44,22 @@ public class MouseHoverHandler {
         + " || Desc: " + info[2]);
   }
 
+  public int gTileCol() {
+    return hoverTile.gettileX();
+  }
+
+  public int gTileRow() {
+    return hoverTile.gettileY();
+  }
+
+  public int gTileHoverX() {
+    return hoverTile.gettilepX();
+  }
+
+  public int gTileHoverY() {
+    return hoverTile.gettilepY();
+  }
+
   private class HoverTile {
     private int pX;
     private int pY;

@@ -18,6 +18,7 @@ public class GamePanel extends JPanel {
   private KeyboardHandler keyboardHandler;
   private TileEditor tileEditor;
   private MouseHoverHandler mouseHoverHandler;
+  private ActualizarGUI actualizarGUI;
 
   public GamePanel() {
     this.setPreferredSize(new Dimension(1280, 720));
@@ -25,9 +26,11 @@ public class GamePanel extends JPanel {
     mapaManager = new MapaManager();
     mouseHandler = new MouseHandler();
     mouseHoverHandler = new MouseHoverHandler(this);
+    actualizarGUI = new ActualizarGUI(this, mouseHoverHandler);
     tileEditor = new TileEditor();
     keyboardHandler = new KeyboardHandler(tileEditor);
     this.addMouseListener(mouseHandler);
+    this.addMouseMotionListener(mouseHandler);
     this.addKeyListener(keyboardHandler);
     this.setFocusable(true);
   }
@@ -59,6 +62,8 @@ public class GamePanel extends JPanel {
       int y = row * TILE_SIZE;
       g.drawLine(0, y, mapCols * TILE_SIZE, y);
     }
+
+    actualizarGUI.drawGui(g);
 
   }
 
