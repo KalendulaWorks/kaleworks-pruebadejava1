@@ -9,7 +9,10 @@ public class GrassTile extends Tile {
 
     super(); // como grasstile hereda tile entonces uso super en lugar de this para
              // constructor creo
-
+    infoDeTile(
+        "Cesped",
+        "GrassTile",
+        "Tile de cesped 1x1");
   }
 
   private void dibujarGrass(Graphics g, int x, int y, int width, int height) {

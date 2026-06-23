@@ -9,11 +9,14 @@ public class ActualizarEditor {
   private MouseHandler mouseHandler;
   private TileEditor editorDeCuadros;
   private MapaManager mapaManager;
+  private MouseHoverHandler mouseHoverHandler;
 
-  public ActualizarEditor(MapaManager mapaManager, TileEditor editorDeCuadros, MouseHandler mouseHandler) {
+  public ActualizarEditor(MapaManager mapaManager, TileEditor editorDeCuadros, MouseHandler mouseHandler,
+      MouseHoverHandler mouseHoverHandler) {
     this.mapaManager = mapaManager;
     this.editorDeCuadros = editorDeCuadros;
     this.mouseHandler = mouseHandler;
+    this.mouseHoverHandler = mouseHoverHandler;
   }
 
   public void updateEditor() {

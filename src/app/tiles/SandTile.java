@@ -10,6 +10,11 @@ public class SandTile extends Tile {
     super(); // como grasstile hereda tile entonces uso super en lugar de this para
              // constructor creo
 
+    infoDeTile(
+        "Arena",
+        "SandTile",
+        "Suelo de Arena");
+
   }
 
   private void dibujarArena(Graphics g, int x, int y, int width, int height) {

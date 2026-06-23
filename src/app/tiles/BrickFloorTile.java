@@ -9,6 +9,10 @@ public class BrickFloorTile extends Tile {
 
     super(); // como grasstile hereda tile entonces uso super en lugar de this para
              // constructor creo
+    infoDeTile(
+        "Piso de ladrillos",
+        "BrickFloorTile",
+        "Piso de ladrillos 1x1");
 
   }
 

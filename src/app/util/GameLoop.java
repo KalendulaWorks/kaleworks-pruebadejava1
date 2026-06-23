@@ -11,9 +11,10 @@ public class GameLoop {
   private GamePanel gamePanel;
   private Timer timer;
 
-  public GameLoop(ActualizarEditor actualizarEditor, GamePanel gamePanel) {
+  public GameLoop(ActualizarEditor actualizarEditor, GamePanel gamePanel, MouseHoverHandler mouseHoverHandler) {
     this.actualizarEditor = actualizarEditor;
     this.gamePanel = gamePanel;
+
     int delay = 33;
 
     timer = new Timer(delay, new ActionListener() {

@@ -9,6 +9,10 @@ public class StudTile extends Tile {
 
     super(); // como grasstile hereda tile entonces uso super en lugar de this para
              // constructor creo
+    infoDeTile(
+        "Piso de Stud",
+        "StudTile",
+        "Piso de plastico con una R, referencia");
 
   }
 

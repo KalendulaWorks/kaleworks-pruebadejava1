@@ -17,12 +17,14 @@ public class GamePanel extends JPanel {
   private MouseHandler mouseHandler;
   private KeyboardHandler keyboardHandler;
   private TileEditor tileEditor;
+  private MouseHoverHandler mouseHoverHandler;
 
   public GamePanel() {
     this.setPreferredSize(new Dimension(1280, 720));
     this.setBackground(Color.DARK_GRAY);
     mapaManager = new MapaManager();
     mouseHandler = new MouseHandler();
+    mouseHoverHandler = new MouseHoverHandler(this);
     tileEditor = new TileEditor();
     keyboardHandler = new KeyboardHandler(tileEditor);
     this.addMouseListener(mouseHandler);
@@ -72,4 +74,7 @@ public class GamePanel extends JPanel {
     return tileEditor;
   }
 
+  public MouseHoverHandler getMouseHoverHandler() {
+    return mouseHoverHandler;
+  }
 }
