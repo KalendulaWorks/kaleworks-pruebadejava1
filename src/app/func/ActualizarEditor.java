@@ -21,6 +21,7 @@ public class ActualizarEditor {
 
   public void updateEditor() {
     editarCuadro();
+    mouseHoverHandler.ActualizarMouse();
   }
 
   private void editarCuadro() {

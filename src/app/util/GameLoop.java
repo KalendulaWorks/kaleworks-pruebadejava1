@@ -11,7 +11,7 @@ public class GameLoop {
   private GamePanel gamePanel;
   private Timer timer;
 
-  public GameLoop(ActualizarEditor actualizarEditor, GamePanel gamePanel, MouseHoverHandler mouseHoverHandler) {
+  public GameLoop(ActualizarEditor actualizarEditor, GamePanel gamePanel) {
     this.actualizarEditor = actualizarEditor;
     this.gamePanel = gamePanel;
 
