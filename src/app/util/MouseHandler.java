@@ -121,4 +121,8 @@ public class MouseHandler implements MouseListener, MouseMotionListener {
       System.out.println("Modo Drag: " + MouseHold);
     }
   }
+
+  public void clearMouseSingle() {
+    MouseSingle = false;
+  }
 }

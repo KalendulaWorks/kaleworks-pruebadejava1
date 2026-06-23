@@ -42,7 +42,7 @@ public class ActualizarEditor {
       editorDeCuadros.apply(mapaManager.getPiso(), col, row);
 
       // opcional: resetear MouseSingle para no repetir
-      // mouseHandler.clearMouseSingle();
+      mouseHandler.clearMouseSingle();
     }
   }
 
