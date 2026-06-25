@@ -10,14 +10,18 @@ public class Concrete1x1 extends Structure {
 
   public Concrete1x1() {
 
-    super(false); // como grasstile hereda tile entonces uso super en lugar de this para
+    super(false,
+        1,
+        1);
+
+    // como grasstile hereda tile entonces uso super en lugar de this para
     // constructor creo
     infoDeStructure(
         "Bloque de Concreto 1x1",
         "Concrete1x1",
         "Un bloque de Concreto de 1x1 Tile",
         "False",
-        "");
+        "No es interactuable");
 
   }
 

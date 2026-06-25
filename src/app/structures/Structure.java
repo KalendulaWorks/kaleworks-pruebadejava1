@@ -3,21 +3,38 @@ package app.structures;
 import java.awt.*;
 
 public abstract class Structure {
-  protected String[] tileInfo;
+  protected String[] structureInfo;
 
-  protected boolean collide;
+  protected boolean canCollide;
+  protected int widthInTiles;
+  protected int heightInTiles;
 
-  public Structure(boolean collide) {
-    this.collide = collide;
+  public Structure(boolean collide, int widthInTiles, int heightInTiles) {
+    this.canCollide = collide;
+    this.widthInTiles = widthInTiles;
+    this.heightInTiles = heightInTiles;
   }
 
   protected void infoDeStructure(String nombre, String nombreT, String desc, String collide, String intr) {
-    this.tileInfo = new String[] { nombre, nombreT, desc, collide, intr };
+    this.structureInfo = new String[] { nombre, nombreT, desc, collide, intr };
   }
 
   public String[] gStructureData() {
-    return tileInfo;
+    return structureInfo;
+  }
+
+  public int gStructureWidth() {
+    return widthInTiles;
+  }
+
+  public int gStructyureHeight() {
+    return heightInTiles;
+  }
+
+  public boolean gCollide() {
+    return canCollide;
   }
 
   public abstract void draw(Graphics g, int x, int y);
+
 }
