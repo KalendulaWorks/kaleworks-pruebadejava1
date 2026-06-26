@@ -17,6 +17,7 @@ public class GamePanel extends JPanel {
   private MouseHandler mouseHandler;
   private KeyboardHandler keyboardHandler;
   private TileEditor tileEditor;
+  private StructureEditor structureEditor;
   private MouseHoverHandler mouseHoverHandler;
   private ActualizarGUI actualizarGUI;
 
@@ -28,7 +29,8 @@ public class GamePanel extends JPanel {
     mouseHoverHandler = new MouseHoverHandler(this);
     actualizarGUI = new ActualizarGUI(this, mouseHoverHandler);
     tileEditor = new TileEditor();
-    keyboardHandler = new KeyboardHandler(tileEditor);
+    structureEditor = new StructureEditor();
+    keyboardHandler = new KeyboardHandler(tileEditor, structureEditor);
     this.addMouseListener(mouseHandler);
     this.addMouseMotionListener(mouseHandler);
     this.addKeyListener(keyboardHandler);
@@ -49,6 +51,7 @@ public class GamePanel extends JPanel {
         int x = col * TILE_SIZE;
         int y = row * TILE_SIZE;
         cuadros[col][row].draw(g, x, y);
+        bloques[col][row].draw(g, x, y);
       }
     }
 
@@ -81,5 +84,9 @@ public class GamePanel extends JPanel {
 
   public MouseHoverHandler getMouseHoverHandler() {
     return mouseHoverHandler;
+  }
+
+  public StructureEditor getStructureEditor() {
+    return structureEditor;
   }
 }

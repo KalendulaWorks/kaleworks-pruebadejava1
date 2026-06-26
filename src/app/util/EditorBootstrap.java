@@ -12,7 +12,8 @@ public class EditorBootstrap {
         panel.getMapaManager(),
         panel.getTileEditor(),
         panel.getMouseHandler(),
-        panel.getMouseHoverHandler());
+        panel.getMouseHoverHandler(),
+        panel.getStructureEditor());
     new GameLoop(actualizarEditor, panel);
   }
 

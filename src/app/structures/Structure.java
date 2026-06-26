@@ -27,7 +27,7 @@ public abstract class Structure {
     return widthInTiles;
   }
 
-  public int gStructyureHeight() {
+  public int gStructureHeight() {
     return heightInTiles;
   }
 

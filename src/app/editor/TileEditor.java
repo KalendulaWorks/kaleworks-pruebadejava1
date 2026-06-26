@@ -16,16 +16,14 @@ public class TileEditor {
 
   public void apply(Tile[][] matriz, int col, int row) {
 
-    // Comprobación de límites de columna
     if (col < 0 || col >= matriz.length) {
       return;
     }
-    // Comprobación de límites de fila
+
     if (row < 0 || row >= matriz[0].length) {
       return;
     }
 
-    // Modo borrador: poner VoidTile y salir
     if (eraserMode) {
       matriz[col][row] = new VoidTile();
       return;

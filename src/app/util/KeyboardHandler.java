@@ -7,10 +7,12 @@ import app.editor.*;
 
 public class KeyboardHandler implements KeyListener {
   private TileEditor tileEditor;
+  private StructureEditor structureEditor;
   private boolean eraserMode;
 
-  public KeyboardHandler(TileEditor tileEditor) {
+  public KeyboardHandler(TileEditor tileEditor, StructureEditor structureEditor) {
     this.tileEditor = tileEditor;
+    this.structureEditor = structureEditor;
   }
 
   @Override
@@ -49,9 +51,22 @@ public class KeyboardHandler implements KeyListener {
         eraserMode = false;
         break;
 
+      case KeyEvent.VK_6:
+        structureEditor.setBrushType(0);
+        structureEditor.setEraserMode(false);
+        eraserMode = false;
+        break;
+
+      case KeyEvent.VK_7:
+        structureEditor.setBrushType(1);
+        structureEditor.setEraserMode(false);
+        eraserMode = false;
+        break;
+
       case KeyEvent.VK_E:
         eraserMode = !eraserMode;
         tileEditor.setEraserMode(eraserMode);
+        structureEditor.setEraserMode(eraserMode);
         break;
       default:
         break;
