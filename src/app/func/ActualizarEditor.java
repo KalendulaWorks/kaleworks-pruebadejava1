@@ -25,6 +25,7 @@ public class ActualizarEditor {
 
   public void updateEditor() {
     editarCuadroPiso(); // pincel, solo si MouseHold == true
+    editarCuadroEstructura();
     aplicarClickSimple(); // individual, solo si MouseSingle == true
     mouseHoverHandler.ActualizarMouse();
   }

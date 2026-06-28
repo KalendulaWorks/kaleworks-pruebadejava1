@@ -2,12 +2,14 @@ package app.util;
 
 import app.*;
 import app.func.*;
+import app.structures.Structure;
 import app.tiles.Tile;
 
 public class MouseHoverHandler {
   private MouseHandler mouseHandler;
   private GamePanel panel;
   private HoverTile hoverTile;
+  private HoverStructure hoverStructure;
   private MapaManager mapaManager;
 
   public static boolean DEBUG = false;
@@ -16,14 +18,16 @@ public class MouseHoverHandler {
     this.panel = panel;
     this.mouseHandler = panel.getMouseHandler();
     this.hoverTile = new HoverTile();
+    this.hoverStructure = new HoverStructure();
     this.mapaManager = panel.getMapaManager();
   }
 
   public void ActualizarMouse() {
     hoverTile.calcularDatos();
-
+    hoverStructure.calcularDatos();
     if (DEBUG) {
       DepurarHoverTiles();
+      DepurarHoverStructures();
     }
 
   }
@@ -45,6 +49,28 @@ public class MouseHoverHandler {
         + " " + hoverTile.gettileY()
         + " || Coordenadas Especificas: " + hoverTile.gettilepX()
         + " " + hoverTile.gettilepY()
+        + " || Nombre: " + info[0]
+        + " || tile.ClassName: " + info[1]
+        + " || Desc: " + info[2]);
+  }
+
+  private void DepurarHoverStructures() {
+    String[] info = hoverStructure.clasificarStructura();
+
+    if (info == null) {
+      System.out.println("Tile ubicado en;" + hoverTile.gettilepX()
+          + " " + hoverTile.gettileY()
+          + " || Coordenadas Especificas: " + hoverTile.gettilepX()
+          + " " + hoverTile.gettilepY()
+          + " || Info: fuera del mapa");
+      return;
+    }
+
+    hoverStructure.calcularDatos();
+    System.out.println("Estructura ubicada en:" + hoverStructure.getstrucX()
+        + " " + hoverStructure.getstrucY()
+        + " || Coordenadas Especificas: " + hoverStructure.getstrucpX()
+        + " " + hoverStructure.getstrucpY()
         + " || Nombre: " + info[0]
         + " || tile.ClassName: " + info[1]
         + " || Desc: " + info[2]);
@@ -116,4 +142,53 @@ public class MouseHoverHandler {
 
   }
 
+  private class HoverStructure {
+    private int pX;
+    private int pY;
+    private int col;
+    private int row;
+
+    public HoverStructure() {
+
+    }
+
+    private void calcularDatos() {
+      this.pX = mouseHandler.getX();
+      this.pY = mouseHandler.getY();
+      this.col = pX / GamePanel.TILE_SIZE;
+      this.row = pY / GamePanel.TILE_SIZE;
+    }
+
+    private String[] clasificarStructura() {
+      Structure[][] bloques = mapaManager.getBloques();
+
+      if (col < 0 || col >= bloques.length) {
+        return null;
+      }
+
+      if (row < 0 || row >= bloques[0].length) {
+        return null;
+      }
+
+      Structure s = mapaManager.getBloque(col, row);
+      return s.gStructureData();
+    }
+
+    private int getstrucpX() {
+      return pX;
+    }
+
+    private int getstrucpY() {
+      return pY;
+    }
+
+    private int getstrucX() {
+      return col;
+    }
+
+    private int getstrucY() {
+      return row;
+    }
+
+  }
 }

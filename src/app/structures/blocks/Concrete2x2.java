@@ -44,8 +44,8 @@ public class Concrete2x2 extends Structure {
 
   public void draw(Graphics g, int x, int y) {
     // aquí va el dibujo del tile, relativo a (x, y)
-    int width = GamePanel.TILE_SIZE;
-    int height = GamePanel.TILE_SIZE;
+    int width = gStructureWidth() * GamePanel.TILE_SIZE;
+    int height = gStructureHeight() * GamePanel.TILE_SIZE;
     dibujarConcreto(g, x, y, width, height);
   }
 }

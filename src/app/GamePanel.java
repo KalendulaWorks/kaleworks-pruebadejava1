@@ -51,7 +51,9 @@ public class GamePanel extends JPanel {
         int x = col * TILE_SIZE;
         int y = row * TILE_SIZE;
         cuadros[col][row].draw(g, x, y);
-        bloques[col][row].draw(g, x, y);
+        if (bloques[col][row] != null) {
+          bloques[col][row].draw(g, x, y);
+        }
       }
     }
 
