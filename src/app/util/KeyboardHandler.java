@@ -63,6 +63,12 @@ public class KeyboardHandler implements KeyListener {
         eraserMode = false;
         break;
 
+      case KeyEvent.VK_8:
+        structureEditor.setBrushType(2);
+        structureEditor.setEraserMode(false);
+        eraserMode = false;
+        break;
+
       case KeyEvent.VK_E:
         eraserMode = !eraserMode;
         tileEditor.setEraserMode(eraserMode);

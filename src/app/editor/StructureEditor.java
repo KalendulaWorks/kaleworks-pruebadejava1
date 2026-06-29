@@ -49,6 +49,9 @@ public class StructureEditor {
         nueva = new Concrete1x1();
         break;
       case 1:
+        nueva = new Concrete2x1();
+        break;
+      case 2:
         nueva = new Concrete2x2();
         break;
       default:
