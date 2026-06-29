@@ -8,6 +8,8 @@ public abstract class Structure {
   protected boolean canCollide;
   protected int widthInTiles;
   protected int heightInTiles;
+  protected int originCol;
+  protected int originRow;
 
   public Structure(boolean collide, int widthInTiles, int heightInTiles) {
     this.canCollide = collide;
@@ -21,6 +23,19 @@ public abstract class Structure {
 
   public String[] gStructureData() {
     return structureInfo;
+  }
+
+  public void setOrigin(int col, int row) {
+    this.originCol = col;
+    this.originRow = row;
+  }
+
+  public int gOriginCol() {
+    return originCol;
+  }
+
+  public int gOriginRow() {
+    return originRow;
   }
 
   public int gStructureWidth() {

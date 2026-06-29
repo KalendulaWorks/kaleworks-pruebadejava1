@@ -87,9 +87,14 @@ public class StructureEditor {
         break;
       }
     }
-    if (canBuild) {
-      estructuras[col][row] = nueva;
-    }
 
+    if (canBuild) {
+      nueva.setOrigin(col, row); // <-- esto sí es válido
+      for (int x = col; x < col + w; x++) {
+        for (int y = row; y < row + h; y++) {
+          estructuras[x][y] = nueva;
+        }
+      }
+    }
   }
 }

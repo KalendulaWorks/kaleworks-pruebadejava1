@@ -31,10 +31,10 @@ public class Concrete2x2 extends Structure {
     g.setColor(new Color(155, 155, 155));
     g.drawRect(x, y, width - 2, height - 2);
 
-    for (int granos = 0; granos < width / 2; granos++) {
-      for (int granosY = 0; granosY < height / 2; granosY++) {
-        int gx = x + granos * 2;
-        int gy = y + granosY * 2;
+    for (int granos = 0; granos < width / 4; granos++) {
+      for (int granosY = 0; granosY < height / 4; granosY++) {
+        int gx = x + granos * 3;
+        int gy = y + granosY * 3;
         g.setColor(new Color(33, 33, 33));
         g.fillRect(gx, gy, 1, 1);
       }
