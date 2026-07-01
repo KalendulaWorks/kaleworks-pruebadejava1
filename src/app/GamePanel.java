@@ -12,23 +12,23 @@ import app.structures.*;
 /*
  * GamePanel es el lienzo principal del juego/editor.
  *
- * Extiende JPanel para poder dibujar con paintComponent.
+ * El loop de dibujo tiene DOS pasadas separadas:
  *
- * Responsabilidades:
- *   - Crear e inicializar todos los componentes del sistema.
- *   - Registrar los listeners de mouse y teclado.
- *   - Dibujar el mapa (piso + estructuras) y la GUI de debug
- *     en cada llamada a paintComponent (que el GameLoop dispara
- *     con repaint() cada ~33ms).
+ *   PASADA 1 - Tiles:
+ *     Recorre todas las celdas y dibuja el tile de piso de cada una.
+ *     Tiene que hacerse completa antes de dibujar estructuras para
+ *     que ningun tile tape una estructura grande.
  *
- * Campos:
- *   TILE_SIZE (static final) → tamaño de cada celda del mapa en píxeles.
- *   mapaManager              → almacena las dos matrices: piso y bloques.
- *   mouseHandler             → escucha eventos del mouse.
- *   keyboardHandler          → escucha eventos del teclado.
- *   mouseHoverHandler        → calcula la celda donde está el cursor.
- *   actualizarGUI            → dibuja información de debug en pantalla.
- *   mapEditor                → editor unificado de tiles y estructuras.
+ *   PASADA 2 - Estructuras:
+ *     Recorre todas las celdas y dibuja la estructura SOLO si la
+ *     celda actual es el ORIGEN de esa estructura
+ *     (s.gOriginCol() == col && s.gOriginRow() == row).
+ *     De esta forma una Concrete2x2 se dibuja UNA sola vez pero
+ *     ocupa visualmente 2x2 tiles completos, sin ser tapada por
+ *     los tiles de las otras 3 celdas del area.
+ *
+ *   PASADA 3 - Grid de debug.
+ *   PASADA 4 - GUI de debug (texto hover).
  */
 public class GamePanel extends JPanel {
 
@@ -58,22 +58,6 @@ public class GamePanel extends JPanel {
     this.setFocusable(true);
   }
 
-  /*
-   * paintComponent se llama cada vez que el GameLoop invoca repaint().
-   *
-   * Dibuja en este orden:
-   *   1. Fondo (super.paintComponent limpia el panel).
-   *   2. Piso: cada tile de la matriz piso.
-   *   3. Estructuras: solo dibuja en la celda ORIGEN de cada estructura.
-   *      Para saber si la celda actual es el origen, comparamos col y row
-   *      contra s.gOriginCol() y s.gOriginRow().
-   *      Esto evita que una estructura 2x2 se dibuje 4 veces (una por celda);
-   *      solo se dibuja una vez desde la esquina superior izquierda.
-   *      La estructura misma se encarga de dibujar todo su tamaño w*h tiles
-   *      usando gStructureWidth/Height * TILE_SIZE como ancho/alto.
-   *   4. Grid de debug (lineas negras).
-   *   5. GUI de debug (texto de hover).
-   */
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -84,25 +68,37 @@ public class GamePanel extends JPanel {
     int mapCols = cuadros.length;
     int mapRows = cuadros[0].length;
 
+    // ---- PASADA 1: dibujar TODOS los tiles de piso ----------------------
+    // Es obligatorio terminar esta pasada antes de dibujar estructuras.
+    // Si mezclamos tiles y estructuras en el mismo loop, el tile de la
+    // celda [col+1][row] se dibuja encima del area derecha de una
+    // estructura 2x2, tapandola parcialmente.
     for (int col = 0; col < mapCols; col++) {
       for (int row = 0; row < mapRows; row++) {
         int x = col * TILE_SIZE;
         int y = row * TILE_SIZE;
-
-        // Paso 1: dibujar el tile de piso
         cuadros[col][row].draw(g, x, y);
+      }
+    }
 
-        // Paso 2: dibujar estructura solo si esta celda es el ORIGEN
-        // Una estructura 2x2 llena 4 celdas en la matriz, pero
-        // solo queremos dibujarla una vez desde la celda origen.
+    // ---- PASADA 2: dibujar estructuras SOLO desde su celda ORIGEN -------
+    // Una estructura 2x2 llena 4 celdas en la matriz de bloques,
+    // todas apuntando a la MISMA instancia.
+    // Verificamos que col == s.gOriginCol() y row == s.gOriginRow()
+    // para dibujarla exactamente una vez, desde la esquina superior
+    // izquierda, con todo su ancho y alto en pixeles.
+    for (int col = 0; col < mapCols; col++) {
+      for (int row = 0; row < mapRows; row++) {
         Structure s = bloques[col][row];
         if (s != null && s.gOriginCol() == col && s.gOriginRow() == row) {
+          int x = col * TILE_SIZE;
+          int y = row * TILE_SIZE;
           s.draw(g, x, y);
         }
       }
     }
 
-    // Grid de debug
+    // ---- PASADA 3: grid de debug ----------------------------------------
     g.setColor(Color.BLACK);
     for (int col = 0; col <= mapCols; col++) {
       int x = col * TILE_SIZE;
@@ -113,24 +109,12 @@ public class GamePanel extends JPanel {
       g.drawLine(0, y, mapCols * TILE_SIZE, y);
     }
 
+    // ---- PASADA 4: GUI de debug -----------------------------------------
     actualizarGUI.drawGui(g);
   }
 
-  // Getters usados por EditorBootstrap y otras clases
-
-  public MapaManager getMapaManager() {
-    return mapaManager;
-  }
-
-  public MouseHandler getMouseHandler() {
-    return mouseHandler;
-  }
-
-  public MouseHoverHandler getMouseHoverHandler() {
-    return mouseHoverHandler;
-  }
-
-  public MapEditor getMapEditor() {
-    return mapEditor;
-  }
+  public MapaManager getMapaManager() { return mapaManager; }
+  public MouseHandler getMouseHandler() { return mouseHandler; }
+  public MouseHoverHandler getMouseHoverHandler() { return mouseHoverHandler; }
+  public MapEditor getMapEditor() { return mapEditor; }
 }
