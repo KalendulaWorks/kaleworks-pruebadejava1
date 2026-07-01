@@ -11,10 +11,11 @@ import app.structures.blocks.*;
  * con APIs distintas, MapEditor expone un único método "apply" que
  * decide qué hacer según el modo actual:
  *   - Mode.TILE      → edita el piso (matriz de Tile)
- *   - Mode.STRUCTURE → coloca/borrar estructuras (matriz de Structure)
+ *   - Mode.STRUCTURE → coloca/borra estructuras (matriz de Structure)
  *
- * El modo se controla desde fuera (KeyboardHandler) usando setMode().
- * Los tipos de brocha (brushType) también se separan en dos canales:
+ * El modo se controla desde fuera (KeyboardHandler / ActualizarEditor)
+ * usando setMode(). Los tipos de brocha (brushType) también se separan
+ * en dos canales:
  *   - tileBrushType       → para elegir el tipo de Tile
  *   - structureBrushType  → para elegir el tipo de Structure
  *
@@ -23,11 +24,13 @@ import app.structures.blocks.*;
  */
 public class MapEditor {
 
+  // Enum sencillo para representar el modo actual del editor.
   public enum Mode {
     TILE,
     STRUCTURE
   }
 
+  // Modo actual. Se setea desde el teclado.
   private Mode mode;
 
   // Brush para tiles (0-4, igual que antes en TileEditor)
@@ -47,8 +50,16 @@ public class MapEditor {
     this.eraserMode = false;
   }
 
-  // ---- Setters de modo y brush -------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // Setters y getters básicos para que otras clases controlen el editor
+  // ---------------------------------------------------------------------------
 
+  /*
+   * Cambia el modo de trabajo del editor.
+   *
+   * Se llama desde KeyboardHandler cuando el usuario presiona una tecla
+   * de tile (1-5) o de estructura (6-8).
+   */
   public void setMode(Mode mode) {
     this.mode = mode;
   }
@@ -57,32 +68,54 @@ public class MapEditor {
     return mode;
   }
 
+  /*
+   * Brush para tiles. Se usa SOLO cuando mode == Mode.TILE.
+   * KeyboardHandler mapea directamente las teclas 1-5 a valores de
+   * tileBrushType.
+   */
   public void setTileBrushType(int tileBrushType) {
     this.tileBrushType = tileBrushType;
   }
 
+  /*
+   * Brush para estructuras. Se usa SOLO cuando mode == Mode.STRUCTURE.
+   * KeyboardHandler mapea directamente las teclas 6-8 a valores de
+   * structureBrushType.
+   */
   public void setStructureBrushType(int structureBrushType) {
     this.structureBrushType = structureBrushType;
   }
 
+  /*
+   * Activa o desactiva el modo borrador.
+   * KeyboardHandler lo togglea con la tecla E.
+   */
   public void setEraserMode(boolean eraserMode) {
     this.eraserMode = eraserMode;
   }
 
+  public boolean getEraserMode() {
+    return eraserMode;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Método principal: apply
+  // ---------------------------------------------------------------------------
+
   /*
-   * apply es el unico metodo que el dispatcher (ActualizarEditor)
+   * apply es el único método que el dispatcher (ActualizarEditor)
    * necesita llamar.
    *
    * Recibe las dos matrices:
    *   - piso      → Tile[][] (el piso del mapa)
    *   - bloques   → Structure[][] (las estructuras construidas)
    *
-   * y coordena todo según el modo actual.
+   * y coordina todo según el modo actual.
    */
   public void apply(Tile[][] piso, Structure[][] bloques, int col, int row) {
 
-    // Validacion basica de indices usando la matriz de piso como referencia.
-    // Se asume que ambas matrices tienen el mismo tamano.
+    // Validación básica de índices usando la matriz de piso como referencia.
+    // Se asume que ambas matrices tienen el mismo tamaño.
     if (piso == null || bloques == null) {
       return;
     }
@@ -95,7 +128,7 @@ public class MapEditor {
       return;
     }
 
-    // Dispatch segun el modo actual
+    // Dispatch según el modo actual
     if (mode == Mode.TILE) {
       applyTile(piso, col, row);
     } else if (mode == Mode.STRUCTURE) {
@@ -103,7 +136,9 @@ public class MapEditor {
     }
   }
 
-  // ---- Implementacion de TILE (fusion de TileEditor.apply) ---------------------
+  // ---------------------------------------------------------------------------
+  // Implementación de TILE (fusion de TileEditor.apply)
+  // ---------------------------------------------------------------------------
 
   private void applyTile(Tile[][] matriz, int col, int row) {
 
@@ -140,15 +175,17 @@ public class MapEditor {
     matriz[col][row] = nuevoTile;
   }
 
-  // ---- Implementacion de STRUCTURE (fusion de StructureEditor.ApicarCambios) ---
+  // ---------------------------------------------------------------------------
+  // Implementación de STRUCTURE (fusion de StructureEditor.ApicarCambios)
+  // ---------------------------------------------------------------------------
 
   private void applyStructure(Tile[][] tiles, Structure[][] estructuras, int col, int row) {
 
-    // Indices basicos ya se validaron en apply()
+    // Indices básicos ya se validaron en apply()
 
     if (eraserMode) {
       // Borrador simple: por ahora solo borra la celda clicada.
-      // Mas adelante puedes ampliar esto para borrar el area completa
+      // Más adelante puedes ampliar esto para borrar el área completa
       // usando gStructureWidth/gStructureHeight y gOriginCol/gOriginRow.
       estructuras[col][row] = null;
       return;
@@ -156,7 +193,7 @@ public class MapEditor {
 
     Tile suelo = tiles[col][row];
     if (suelo instanceof VoidTile) {
-      // No construir sobre tiles nulos o invalidos
+      // No construir sobre tiles nulos o inválidos
       return;
     }
 
@@ -173,14 +210,14 @@ public class MapEditor {
         nueva = new Concrete2x2();
         break;
       default:
-        // brush no valido → no construir
+        // brush no válido → no construir
         return;
     }
 
     int w = nueva.gStructureWidth();
     int h = nueva.gStructureHeight();
 
-    // Comprobacion de limites: toda el area debe entrar en el mapa
+    // Comprobación de límites: toda el área debe entrar en el mapa
     if (col + w > tiles.length) {
       return;
     }
@@ -191,7 +228,7 @@ public class MapEditor {
 
     boolean canBuild = true;
 
-    // Verificar que no haya estructuras ni VoidTile en el area
+    // Verificar que no haya estructuras ni VoidTile en el área
     for (int x = col; x < col + w; x++) {
       for (int y = row; y < row + h; y++) {
         Tile condicionTile = tiles[x][y];
@@ -216,7 +253,7 @@ public class MapEditor {
       return;
     }
 
-    // Si llegamos aqui, el area es valida para construir
+    // Si llegamos aquí, el área es válida para construir
     nueva.setOrigin(col, row);
     for (int x = col; x < col + w; x++) {
       for (int y = row; y < row + h; y++) {
