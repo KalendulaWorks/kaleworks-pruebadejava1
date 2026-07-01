@@ -3,26 +3,29 @@ package app.structures.blocks;
 import app.GamePanel;
 import app.structures.*;
 
-import javax.swing.*;
 import java.awt.*;
 
+/*
+ * Bloque de Concreto 2x1.
+ *
+ * Esta estructura ocupa 1 columna x 2 filas de tiles.
+ * draw() dibuja un rectángulo de tamaño
+ *   width = 1 * TILE_SIZE
+ *   height = 2 * TILE_SIZE
+ * empezando en la posición (x, y) de la celda ORIGEN.
+ */
 public class Concrete2x1 extends Structure {
 
   public Concrete2x1() {
+    // collide = false, widthInTiles = 1, heightInTiles = 2
+    super(false, 1, 2);
 
-    super(false,
-        1,
-        2);
-
-    // como grasstile hereda tile entonces uso super en lugar de this para
-    // constructor creo
     infoDeStructure(
-        "Bloque de Concreto 2x2",
-        "Concrete2x2",
-        "Un bloque de Concreto de 2x2 Tile",
+        "Bloque de Concreto 2x1",
+        "Concrete2x1",
+        "Un bloque de Concreto de 1x2 Tiles",
         "False",
         "No es interactuable");
-
   }
 
   private void dibujarConcreto(Graphics g, int x, int y, int width, int height) {
@@ -39,13 +42,12 @@ public class Concrete2x1 extends Structure {
         g.fillRect(gx, gy, 1, 1);
       }
     }
-
   }
 
+  @Override
   public void draw(Graphics g, int x, int y) {
-    // aquí va el dibujo del tile, relativo a (x, y)
-    int width = gStructureWidth() * GamePanel.TILE_SIZE;
-    int height = gStructureHeight() * GamePanel.TILE_SIZE;
+    int width = gStructureWidth() * GamePanel.TILE_SIZE;   // 1 * TILE_SIZE
+    int height = gStructureHeight() * GamePanel.TILE_SIZE; // 2 * TILE_SIZE
     dibujarConcreto(g, x, y, width, height);
   }
 }
