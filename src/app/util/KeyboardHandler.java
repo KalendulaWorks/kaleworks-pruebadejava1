@@ -2,36 +2,22 @@ package app.util;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-import app.tiles.*;
-import app.editor.*;
-import app.func.ActualizarEditor;
+import app.editor.MapEditor;
 
+/*
+ * KeyboardHandler ahora solo controla el MapEditor unificado.
+ *
+ * Responsabilidades:
+ *   - Cambiar el modo del editor (TILE / STRUCTURE) segun la tecla.
+ *   - Seleccionar el brush correspondiente (tileBrushType / structureBrushType).
+ *   - Toggle del modo borrador con la tecla E.
+ */
 public class KeyboardHandler implements KeyListener {
-  private TileEditor tileEditor;
-  private StructureEditor structureEditor;
-
-  /*
-   * Referencia a ActualizarEditor para poder llamar setModoEstructuras().
-   *
-   * Antes, KeyboardHandler solo conocia TileEditor y StructureEditor.
-   * El problema era que ambos editores se ejecutaban siempre en paralelo
-   * dentro de ActualizarEditor, sin saber cul estaba "activo".
-   *
-   * Ahora KeyboardHandler le dice directamente a ActualizarEditor
-   * en qu modo estamos, y ActualizarEditor solo delega al editor correcto.
-   */
-  private ActualizarEditor actualizarEditor;
-
-  /*
-   * eraserMode se guarda localmente para poder togglearlo con E
-   * y propagarlo a ambos editores al mismo tiempo.
-   */
+  private MapEditor mapEditor;
   private boolean eraserMode;
 
-  public KeyboardHandler(TileEditor tileEditor, StructureEditor structureEditor, ActualizarEditor actualizarEditor) {
-    this.tileEditor = tileEditor;
-    this.structureEditor = structureEditor;
-    this.actualizarEditor = actualizarEditor;
+  public KeyboardHandler(MapEditor mapEditor) {
+    this.mapEditor = mapEditor;
     this.eraserMode = false;
   }
 
@@ -42,78 +28,74 @@ public class KeyboardHandler implements KeyListener {
     switch (code) {
 
       // ---- MODO TILE (teclas 1-5) ------------------------------------
-      // Al seleccionar cualquier tile, desactivamos modoEstructuras.
-      // Asi el dispatch en ActualizarEditor sabe que debe llamar a TileEditor.
+      // Al seleccionar cualquier tile, activamos Mode.TILE.
 
       case KeyEvent.VK_1:
-        tileEditor.setBrushType(0);        // GrassTile
-        tileEditor.setEraserMode(false);
-        actualizarEditor.setModoEstructuras(false); // <- cambio de modo
+        mapEditor.setMode(MapEditor.Mode.TILE);
+        mapEditor.setTileBrushType(0); // GrassTile
+        mapEditor.setEraserMode(false);
         eraserMode = false;
         break;
 
       case KeyEvent.VK_2:
-        tileEditor.setBrushType(1);        // SandTile
-        tileEditor.setEraserMode(false);
-        actualizarEditor.setModoEstructuras(false);
+        mapEditor.setMode(MapEditor.Mode.TILE);
+        mapEditor.setTileBrushType(1); // SandTile
+        mapEditor.setEraserMode(false);
         eraserMode = false;
         break;
 
       case KeyEvent.VK_3:
-        tileEditor.setBrushType(2);        // StudTile
-        tileEditor.setEraserMode(false);
-        actualizarEditor.setModoEstructuras(false);
+        mapEditor.setMode(MapEditor.Mode.TILE);
+        mapEditor.setTileBrushType(2); // StudTile
+        mapEditor.setEraserMode(false);
         eraserMode = false;
         break;
 
       case KeyEvent.VK_4:
-        tileEditor.setBrushType(3);        // BrickFloorTile
-        tileEditor.setEraserMode(false);
-        actualizarEditor.setModoEstructuras(false);
+        mapEditor.setMode(MapEditor.Mode.TILE);
+        mapEditor.setTileBrushType(3); // BrickFloorTile
+        mapEditor.setEraserMode(false);
         eraserMode = false;
         break;
 
       case KeyEvent.VK_5:
-        tileEditor.setBrushType(4);        // reservado para futuros tiles
-        tileEditor.setEraserMode(false);
-        actualizarEditor.setModoEstructuras(false);
+        mapEditor.setMode(MapEditor.Mode.TILE);
+        mapEditor.setTileBrushType(4); // reservado para futuros tiles
+        mapEditor.setEraserMode(false);
         eraserMode = false;
         break;
 
       // ---- MODO ESTRUCTURA (teclas 6-8) ------------------------------
-      // Al seleccionar cualquier estructura, activamos modoEstructuras.
-      // Asi el dispatch en ActualizarEditor sabe que debe llamar a StructureEditor.
+      // Al seleccionar cualquier estructura, activamos Mode.STRUCTURE.
 
       case KeyEvent.VK_6:
-        structureEditor.setBrushType(0);   // Concrete1x1
-        structureEditor.setEraserMode(false);
-        actualizarEditor.setModoEstructuras(true); // <- cambio de modo
+        mapEditor.setMode(MapEditor.Mode.STRUCTURE);
+        mapEditor.setStructureBrushType(0); // Concrete1x1
+        mapEditor.setEraserMode(false);
         eraserMode = false;
         break;
 
       case KeyEvent.VK_7:
-        structureEditor.setBrushType(1);   // Concrete2x1
-        structureEditor.setEraserMode(false);
-        actualizarEditor.setModoEstructuras(true);
+        mapEditor.setMode(MapEditor.Mode.STRUCTURE);
+        mapEditor.setStructureBrushType(1); // Concrete2x1
+        mapEditor.setEraserMode(false);
         eraserMode = false;
         break;
 
       case KeyEvent.VK_8:
-        structureEditor.setBrushType(2);   // Concrete2x2
-        structureEditor.setEraserMode(false);
-        actualizarEditor.setModoEstructuras(true);
+        mapEditor.setMode(MapEditor.Mode.STRUCTURE);
+        mapEditor.setStructureBrushType(2); // Concrete2x2
+        mapEditor.setEraserMode(false);
         eraserMode = false;
         break;
 
       // ---- BORRADOR (tecla E) ----------------------------------------
       // Toggle: si estaba en false pasa a true y viceversa.
-      // Se propaga a ambos editores para que el que este activo borre
-      // correctamente sin importar en que modo estemos.
+      // El MapEditor decide qué canal borrar según el modo actual.
 
       case KeyEvent.VK_E:
         eraserMode = !eraserMode;
-        tileEditor.setEraserMode(eraserMode);
-        structureEditor.setEraserMode(eraserMode);
+        mapEditor.setEraserMode(eraserMode);
         break;
 
       default:
