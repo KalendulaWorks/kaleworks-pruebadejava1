@@ -3,26 +3,27 @@ package app.structures.blocks;
 import app.GamePanel;
 import app.structures.*;
 
-import javax.swing.*;
 import java.awt.*;
 
+/*
+ * Bloque de Concreto 1x1.
+ *
+ * Esta estructura ocupa exactamente 1x1 tiles.
+ * Su draw() dibuja un rectángulo de tamaño TILE_SIZE x TILE_SIZE
+ * empezando en la posición (x, y) de la celda origen.
+ */
 public class Concrete1x1 extends Structure {
 
   public Concrete1x1() {
+    // collide = false, widthInTiles = 1, heightInTiles = 1
+    super(false, 1, 1);
 
-    super(false,
-        1,
-        1);
-
-    // como grasstile hereda tile entonces uso super en lugar de this para
-    // constructor creo
     infoDeStructure(
         "Bloque de Concreto 1x1",
         "Concrete1x1",
         "Un bloque de Concreto de 1x1 Tile",
         "False",
         "No es interactuable");
-
   }
 
   private void dibujarConcreto(Graphics g, int x, int y, int width, int height) {
@@ -39,13 +40,12 @@ public class Concrete1x1 extends Structure {
         g.fillRect(gx, gy, 1, 1);
       }
     }
-
   }
 
+  @Override
   public void draw(Graphics g, int x, int y) {
-    // aquí va el dibujo del tile, relativo a (x, y)
-    int width = GamePanel.TILE_SIZE;
-    int height = GamePanel.TILE_SIZE;
+    int width = gStructureWidth() * GamePanel.TILE_SIZE;   // 1 * TILE_SIZE
+    int height = gStructureHeight() * GamePanel.TILE_SIZE; // 1 * TILE_SIZE
     dibujarConcreto(g, x, y, width, height);
   }
 }
