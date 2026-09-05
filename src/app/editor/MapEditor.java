@@ -1,8 +1,8 @@
 package app.editor;
 
-import app.tiles.*;
 import app.structures.*;
 import app.structures.blocks.*;
+import app.tiles.*;
 
 /*
  * MapEditor es un editor unificado para TILES y ESTRUCTURAS.
@@ -42,12 +42,17 @@ public class MapEditor {
   // Modo borrador compartido: si es true, se borra en el canal activo
   private boolean eraserMode;
 
+  private int refWidth;
+  private int refHeight;
+
   public MapEditor() {
     // Por defecto arrancamos en modo TILE
     this.mode = Mode.TILE;
     this.tileBrushType = 0;
     this.structureBrushType = 0;
     this.eraserMode = false;
+    this.refWidth = 1;
+    this.refHeight = 1;
   }
 
   // ---------------------------------------------------------------------------
@@ -60,12 +65,22 @@ public class MapEditor {
    * Se llama desde KeyboardHandler cuando el usuario presiona una tecla
    * de tile (1-5) o de estructura (6-8).
    */
-  public void setMode(Mode mode) {
+  public void setBMode(Mode mode) {
     this.mode = mode;
   }
 
-  public Mode getMode() {
+  public Mode getBMode() {
     return mode;
+  }
+
+  public int getBModeInt(){
+   int BMode = 0;
+   if (mode == Mode.TILE) {
+    BMode = 1;
+   } else {
+    BMode = 2;
+   }
+   return BMode;
   }
 
   /*
@@ -75,6 +90,19 @@ public class MapEditor {
    */
   public void setTileBrushType(int tileBrushType) {
     this.tileBrushType = tileBrushType;
+  }
+
+  public void setRefSize(int w, int h){
+    this.refWidth = w;
+    this.refHeight = h;
+  }
+
+  public int gRefWidth(){
+    return refWidth;
+  }
+
+  public int gRefHeigt(){
+    return refHeight;
   }
 
   /*
@@ -136,6 +164,30 @@ public class MapEditor {
     }
   }
 
+
+  private Structure elegirEstructura(){
+    Structure selecS = null;
+        switch (structureBrushType) {
+      case 0:
+        selecS = new Concrete1x1();
+        setRefSize(selecS.gStructureWidth(),selecS.gStructureHeight());
+        break;
+      case 1:
+        selecS = new Concrete2x1();
+        setRefSize(selecS.gStructureWidth(),selecS.gStructureHeight());
+        break;
+      case 2:
+        selecS = new Concrete2x2();
+        setRefSize(selecS.gStructureWidth(),selecS.gStructureHeight());
+        break;
+      default:
+        // brush no válido → no construir
+        return null;
+    }
+    return selecS;
+  }
+
+
   // ---------------------------------------------------------------------------
   // Implementación de TILE (fusion de TileEditor.apply)
   // ---------------------------------------------------------------------------
@@ -180,15 +232,26 @@ public class MapEditor {
   // ---------------------------------------------------------------------------
 
   private void applyStructure(Tile[][] tiles, Structure[][] estructuras, int col, int row) {
-
     // Indices básicos ya se validaron en apply()
 
     if (eraserMode) {
-      // Borrador simple: por ahora solo borra la celda clicada.
-      // Más adelante puedes ampliar esto para borrar el área completa
-      // usando gStructureWidth/gStructureHeight y gOriginCol/gOriginRow.
-      estructuras[col][row] = null;
+      Structure s = estructuras[col][row];
+
+      if (s != null) {
+      int oC = s.gOriginCol();
+      int oR = s.gOriginRow();
+      int sW = s.gStructureWidth();
+      int sH = s.gStructureHeight();
+      
+      for (int x = oC; x < oC + sW; x++) {
+        for (int y = oR; y < row + sH; y++) {
+          estructuras[x][y] = null;
+        }
+      }
       return;
+        } else {
+          return;
+      }
     }
 
     Tile suelo = tiles[col][row];
@@ -197,17 +260,20 @@ public class MapEditor {
       return;
     }
 
-    Structure nueva = null;
+    Structure nueva = elegirEstructura();
 
     switch (structureBrushType) {
       case 0:
         nueva = new Concrete1x1();
+        setRefSize(nueva.gStructureWidth(),nueva.gStructureHeight());
         break;
       case 1:
         nueva = new Concrete2x1();
+        setRefSize(nueva.gStructureWidth(),nueva.gStructureHeight());
         break;
       case 2:
         nueva = new Concrete2x2();
+        setRefSize(nueva.gStructureWidth(),nueva.gStructureHeight());
         break;
       default:
         // brush no válido → no construir
@@ -216,7 +282,6 @@ public class MapEditor {
 
     int w = nueva.gStructureWidth();
     int h = nueva.gStructureHeight();
-
     // Comprobación de límites: toda el área debe entrar en el mapa
     if (col + w > tiles.length) {
       return;

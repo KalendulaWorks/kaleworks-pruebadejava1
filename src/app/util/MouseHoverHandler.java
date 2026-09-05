@@ -1,7 +1,7 @@
 package app.util;
 
-import app.*;
-import app.func.*;
+import app.GamePanel;
+import app.func.MapaManager;
 import app.structures.Structure;
 import app.tiles.Tile;
 
@@ -12,7 +12,7 @@ public class MouseHoverHandler {
   private HoverStructure hoverStructure;
   private MapaManager mapaManager;
 
-  public static boolean DEBUG = false;
+  public static boolean DEBUG = true;
 
   public MouseHoverHandler(GamePanel panel) {
     this.panel = panel;
@@ -58,11 +58,11 @@ public class MouseHoverHandler {
     String[] info = hoverStructure.clasificarStructura();
 
     if (info == null) {
-      System.out.println("Tile ubicado en;" + hoverTile.gettilepX()
+      System.out.println("Estructura vacia en;" + hoverTile.gettilepX()
           + " " + hoverTile.gettileY()
           + " || Coordenadas Especificas: " + hoverTile.gettilepX()
           + " " + hoverTile.gettilepY()
-          + " || Info: fuera del mapa");
+          + " || Info: Slot libre de estructuras");
       return;
     }
 
@@ -171,7 +171,13 @@ public class MouseHoverHandler {
       }
 
       Structure s = mapaManager.getBloque(col, row);
-      return s.gStructureData();
+      
+      if (s != null) {
+      return s.gStructureData(); 
+      } else {
+      return null; 
+      }
+
     }
 
     private int getstrucpX() {

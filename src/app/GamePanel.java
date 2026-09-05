@@ -1,13 +1,12 @@
 package app;
 
-import javax.swing.*;
-import java.awt.*;
-
+import app.editor.*;
 import app.func.*;
+import app.structures.*;
 import app.tiles.*;
 import app.util.*;
-import app.editor.*;
-import app.structures.*;
+import java.awt.*;
+import javax.swing.*;
 
 /*
  * GamePanel es el lienzo principal del juego/editor.
@@ -117,4 +116,5 @@ public class GamePanel extends JPanel {
   public MouseHandler getMouseHandler() { return mouseHandler; }
   public MouseHoverHandler getMouseHoverHandler() { return mouseHoverHandler; }
   public MapEditor getMapEditor() { return mapEditor; }
+  public ActualizarGUI getHoverGui() { return actualizarGUI; }
 }

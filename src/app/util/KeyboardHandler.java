@@ -1,8 +1,8 @@
 package app.util;
 
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
 import app.editor.MapEditor;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /*
  * KeyboardHandler ahora solo controla el MapEditor unificado.
@@ -15,6 +15,7 @@ import app.editor.MapEditor;
 public class KeyboardHandler implements KeyListener {
   private MapEditor mapEditor;
   private boolean eraserMode;
+ 
 
   public KeyboardHandler(MapEditor mapEditor) {
     this.mapEditor = mapEditor;
@@ -31,35 +32,35 @@ public class KeyboardHandler implements KeyListener {
       // Al seleccionar cualquier tile, activamos Mode.TILE.
 
       case KeyEvent.VK_1:
-        mapEditor.setMode(MapEditor.Mode.TILE);
+        mapEditor.setBMode(MapEditor.Mode.TILE);
         mapEditor.setTileBrushType(0); // GrassTile
         mapEditor.setEraserMode(false);
         eraserMode = false;
         break;
 
       case KeyEvent.VK_2:
-        mapEditor.setMode(MapEditor.Mode.TILE);
+        mapEditor.setBMode(MapEditor.Mode.TILE);
         mapEditor.setTileBrushType(1); // SandTile
         mapEditor.setEraserMode(false);
         eraserMode = false;
         break;
 
       case KeyEvent.VK_3:
-        mapEditor.setMode(MapEditor.Mode.TILE);
+        mapEditor.setBMode(MapEditor.Mode.TILE);
         mapEditor.setTileBrushType(2); // StudTile
         mapEditor.setEraserMode(false);
         eraserMode = false;
         break;
 
       case KeyEvent.VK_4:
-        mapEditor.setMode(MapEditor.Mode.TILE);
+        mapEditor.setBMode(MapEditor.Mode.TILE);
         mapEditor.setTileBrushType(3); // BrickFloorTile
         mapEditor.setEraserMode(false);
         eraserMode = false;
         break;
 
       case KeyEvent.VK_5:
-        mapEditor.setMode(MapEditor.Mode.TILE);
+        mapEditor.setBMode(MapEditor.Mode.TILE);
         mapEditor.setTileBrushType(4); // reservado para futuros tiles
         mapEditor.setEraserMode(false);
         eraserMode = false;
@@ -69,21 +70,22 @@ public class KeyboardHandler implements KeyListener {
       // Al seleccionar cualquier estructura, activamos Mode.STRUCTURE.
 
       case KeyEvent.VK_6:
-        mapEditor.setMode(MapEditor.Mode.STRUCTURE);
+        mapEditor.setBMode(MapEditor.Mode.STRUCTURE);
         mapEditor.setStructureBrushType(0); // Concrete1x1
         mapEditor.setEraserMode(false);
         eraserMode = false;
+        
         break;
 
       case KeyEvent.VK_7:
-        mapEditor.setMode(MapEditor.Mode.STRUCTURE);
+        mapEditor.setBMode(MapEditor.Mode.STRUCTURE);
         mapEditor.setStructureBrushType(1); // Concrete2x1
         mapEditor.setEraserMode(false);
         eraserMode = false;
         break;
 
       case KeyEvent.VK_8:
-        mapEditor.setMode(MapEditor.Mode.STRUCTURE);
+        mapEditor.setBMode(MapEditor.Mode.STRUCTURE);
         mapEditor.setStructureBrushType(2); // Concrete2x2
         mapEditor.setEraserMode(false);
         eraserMode = false;

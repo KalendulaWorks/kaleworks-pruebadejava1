@@ -1,7 +1,7 @@
 package app.func;
 
-import app.tiles.*;
 import app.structures.*;
+import app.tiles.*;
 
 public class MapaManager {
 

@@ -1,15 +1,15 @@
 package app.tiles;
 
-import javax.swing.*;
-import java.awt.*;
-import app.func.*;
 import app.util.*;
-import app.*;
+import java.awt.*;
 
 public abstract class Tile {
 
   protected MouseHandler mouseHandler;
   protected String[] tileInfo;
+  protected boolean hasStructure;
+  
+  
 
   public Tile() {
 
